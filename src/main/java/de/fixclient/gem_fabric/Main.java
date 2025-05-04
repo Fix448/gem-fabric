@@ -1,5 +1,6 @@
 package de.fixclient.gem_fabric;
 
+import de.fixclient.gem_fabric.commands.Gem_Command;
 import de.fixclient.gem_fabric.item.ItemManager;
 import de.fixclient.gem_fabric.item.ItemNames;
 import net.fabricmc.api.ModInitializer;
@@ -50,5 +51,7 @@ public class Main implements ModInitializer {
                 }
             }
         }));
+
+        Gem_Command.register();
     }
 }
