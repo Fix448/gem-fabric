@@ -1,12 +1,15 @@
 package de.fixclient.gem_fabric.item;
 
-import net.minecraft.component.type.TooltipDisplayComponent;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
@@ -24,4 +27,12 @@ public class Heilungs_Gem extends Item {
         return ActionResult.SUCCESS;
     }
 
+    @Override
+    public void onItemEntityDestroyed(ItemEntity entity) {
+        if (!entity.getWorld().isClient) {
+            ServerWorld serverWorld = (ServerWorld) entity.getWorld();
+            BlockPos spawn = serverWorld.getSpawnPos();
+            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY(), spawn.getZ(), new ItemStack(ItemManager.HEILUNGS_GEM)));
+        }
+    }
 }

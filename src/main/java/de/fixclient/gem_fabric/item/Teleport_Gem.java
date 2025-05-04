@@ -1,12 +1,15 @@
 package de.fixclient.gem_fabric.item;
 
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class Teleport_Gem extends Item {
@@ -22,5 +25,14 @@ public class Teleport_Gem extends Item {
             ProjectileEntity.spawnWithVelocity(EnderPearlEntity::new, serverWorld, user.getStackInHand(hand), user, 0.0f, 1.5f, 1.0F);
         }
         return ActionResult.SUCCESS;
+    }
+
+    @Override
+    public void onItemEntityDestroyed(ItemEntity entity) {
+        if (!entity.getWorld().isClient) {
+            ServerWorld serverWorld = (ServerWorld) entity.getWorld();
+            BlockPos spawn = serverWorld.getSpawnPos();
+            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY(), spawn.getZ(), new ItemStack(ItemManager.TELEPORT_GEM)));
+        }
     }
 }
