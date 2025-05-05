@@ -1,8 +1,10 @@
 // 1.21.5	-999999999-01-01T00:00:00	gem_fabric/Model Definitions
+84d3802eda04d3522cf764b57651bdf85e257477 assets/gem_fabric/items/god_gem.json
 d760fd62fe41d9ad96bce3b772126d9e531f92ed assets/gem_fabric/items/heilungs_gem.json
 a54029cbd2f36eb34543906beedeffe123b60fe0 assets/gem_fabric/items/luft_gem.json
 d1f07b234407de88b484aea35a460cae55b092d6 assets/gem_fabric/items/orange_gem.json
 4544469e9895f72c9d4a4b4b5869eaf48b8ac861 assets/gem_fabric/items/teleport_gem.json
+2b9d3a4bfb8f8ed28b347b18404f1a1ae58f417c assets/gem_fabric/models/item/god_gem.json
 fd072338e3cf79910cfa8ceae8ef5ff9691a9b99 assets/gem_fabric/models/item/heilungs_gem.json
 70c3320f6132d13c867c91aa29937fbb2f298fda assets/gem_fabric/models/item/luft_gem.json
 646291b8fad29784e5ffe28cfad5649deb3cc533 assets/gem_fabric/models/item/orange_gem.json

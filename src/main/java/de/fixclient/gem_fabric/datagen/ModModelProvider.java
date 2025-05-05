@@ -23,5 +23,6 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ItemManager.TELEPORT_GEM, Models.GENERATED);
         itemModelGenerator.register(ItemManager.LUFT_GEM, Models.GENERATED);
         itemModelGenerator.register(ItemManager.ORANGE_GEM, Models.GENERATED);
+        itemModelGenerator.register(ItemManager.GOD_GEM, Models.GENERATED);
     }
 }

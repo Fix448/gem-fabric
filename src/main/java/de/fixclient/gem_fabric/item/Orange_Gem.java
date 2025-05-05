@@ -24,15 +24,20 @@ public class Orange_Gem extends Item {
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient) {
             ServerWorld serverWorld = (ServerWorld) world;
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 5));
             List<LivingEntity> entityList = serverWorld.getNonSpectatingEntities(LivingEntity.class, user.getBoundingBox().expand(4.0, 2.0, 4.0));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10));
             if (!entityList.isEmpty()) {
-                for (LivingEntity livingEntity : entityList) {
-                    double distance = user.squaredDistanceTo(livingEntity);
-                    if (distance < 16.0) {
-                        double f = livingEntity.fallDistance;
-                        double g = 22.0 + f - 8.0;
-                        livingEntity.damage(serverWorld, livingEntity.getDamageSources().maceSmash(user), (float) g);
+                if (user.isOnGround()) {
+                    for (LivingEntity livingEntity : entityList) {
+                        double distance = user.squaredDistanceTo(livingEntity);
+                        if (!livingEntity.equals(user)) {
+                            if (distance < 16.0) {
+                                double f = livingEntity.fallDistance;
+                                double g = 22.0 + f - 8.0;
+                                livingEntity.damage(serverWorld, livingEntity.getDamageSources().maceSmash(user), (float) g);
+                            }
+                        }
+
                     }
                 }
             }
