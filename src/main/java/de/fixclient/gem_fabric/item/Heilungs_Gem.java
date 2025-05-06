@@ -32,7 +32,7 @@ public class Heilungs_Gem extends Item {
         if (!entity.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) entity.getWorld();
             BlockPos spawn = serverWorld.getSpawnPos();
-            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY(), spawn.getZ(), new ItemStack(ItemManager.HEILUNGS_GEM)));
+            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY() +1, spawn.getZ(), new ItemStack(ItemManager.HEILUNGS_GEM)));
         }
     }
 }

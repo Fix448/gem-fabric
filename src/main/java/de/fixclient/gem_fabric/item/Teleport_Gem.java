@@ -32,7 +32,7 @@ public class Teleport_Gem extends Item {
         if (!entity.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) entity.getWorld();
             BlockPos spawn = serverWorld.getSpawnPos();
-            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY(), spawn.getZ(), new ItemStack(ItemManager.TELEPORT_GEM)));
+            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX() , spawn.getY() +1, spawn.getZ(), new ItemStack(ItemManager.TELEPORT_GEM)));
         }
     }
 }

@@ -17,9 +17,14 @@ import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Set;
 
 public class Gem_Command {
 
@@ -27,11 +32,12 @@ public class Gem_Command {
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
             dispatcher.register(CommandManager.literal("gem")
                     .requires(source -> source.hasPermissionLevel(2))
-                    .then(CommandManager.literal("start").executes(Gem_Command::start)));
+                    .then(CommandManager.literal("start").executes(Gem_Command::startStructure))
+                    .then(CommandManager.literal("drop").executes(Gem_Command::dropGem)));
         }));
     }
 
-    private static int start (CommandContext<ServerCommandSource> context) {
+    private static int startStructure(CommandContext<ServerCommandSource> context) {
 
 
         World world = context.getSource().getWorld();
@@ -58,11 +64,30 @@ public class Gem_Command {
             );
             serverWorld.setSpawnPos(new BlockPos(spawn.getX(), spawn.getY() + 4, spawn.getZ()), serverWorld.getSpawnAngle());
 
-            serverWorld.spawnEntity(new ItemEntity(world, spawn.getX(), spawn.getY() + 5, spawn.getZ(), new ItemStack(ItemManager.TELEPORT_GEM)));
-            serverWorld.spawnEntity(new ItemEntity(world, spawn.getX(), spawn.getY() + 5, spawn.getZ(), new ItemStack(ItemManager.LUFT_GEM)));
-            serverWorld.spawnEntity(new ItemEntity(world, spawn.getX(), spawn.getY() + 5, spawn.getZ(), new ItemStack(ItemManager.HEILUNGS_GEM)));
-            serverWorld.spawnEntity(new ItemEntity(world, spawn.getX(), spawn.getY() + 5, spawn.getZ(), new ItemStack(ItemManager.ORANGE_GEM)));
+
         }
         return 1;
+    }
+
+    private static int dropGem(CommandContext<ServerCommandSource> context) {;
+        if (!context.getSource().getWorld().isClient) {
+            ServerWorld serverWorld = context.getSource().getWorld();
+            BlockPos spawn = serverWorld.getSpawnPos();
+            List<ItemEntity> entityList = getItemEntities(serverWorld, spawn);
+            for (ItemEntity itemEntity : entityList) {
+                itemEntity.setVelocity(Vec3d.ZERO);
+                serverWorld.spawnEntity(itemEntity);
+            }
+        }
+        return 1;
+    }
+
+    private static @NotNull List<ItemEntity> getItemEntities(ServerWorld serverWorld, BlockPos spawn) {
+        ItemEntity heilung = new ItemEntity(serverWorld, spawn.getX() +0.5, spawn.getY()+1, spawn.getZ() +0.5, new ItemStack(ItemManager.HEILUNGS_GEM));
+        ItemEntity luft = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+1, spawn.getZ()+0.5, new ItemStack(ItemManager.LUFT_GEM));
+        ItemEntity orange = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+1, spawn.getZ()+0.5, new ItemStack(ItemManager.ORANGE_GEM));
+        ItemEntity teleport = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+1, spawn.getZ()+0.5, new ItemStack(ItemManager.TELEPORT_GEM));
+        List<ItemEntity> entityList = List.of(teleport, heilung, luft, orange);
+        return entityList;
     }
 }
