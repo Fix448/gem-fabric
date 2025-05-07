@@ -5,6 +5,8 @@
   "item.gem_fabric.orange_gem" : "§6§kkkk§r§r§6 Orange Gem §r§6§kkkk§r§r",
   "item.gem_fabric.god_gem" : "§4§kkkk §r§r§4 §r§4§l God Gem §r§r§4§kkkk§r§r",
 
+  "item.crash.reason" : "Happy April Fools",
+
   "tooltip.gem_fabric.not-shift-down" : "Press §lShift§r for more Informations!",
 
   "tooltip.gem_fabric.luft_gem.shift-down" : "When you use this Item, nearby mobs fly towards the clouds",

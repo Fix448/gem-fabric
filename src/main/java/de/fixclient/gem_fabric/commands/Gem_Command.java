@@ -38,8 +38,6 @@ public class Gem_Command {
     }
 
     private static int startStructure(CommandContext<ServerCommandSource> context) {
-
-
         World world = context.getSource().getWorld();
         if (!world.isClient) {
             ServerWorld serverWorld = (ServerWorld) world;

@@ -1,6 +1,8 @@
 package de.fixclient.gem_fabric.item;
 
 import de.fixclient.gem_fabric.Main;
+import de.fixclient.gem_fabric.item.april_fools.CrashItem;
+import de.fixclient.gem_fabric.item.season_2.*;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
@@ -16,6 +18,8 @@ public class ItemManager {
     public static final Item LUFT_GEM = new Luft_Gem(createItemSettings(ItemNames.LUFT_GEM_NAME).useCooldown(6.0f));
     public static final Item ORANGE_GEM = new Orange_Gem(createItemSettings(ItemNames.ORANGE_GEM_NAME).useCooldown(6.0f));
     public static final Item GOD_GEM = new god_gem(createItemSettings(ItemNames.GOD_GEM_NAME));
+
+    public static final Item CRASH_GEM = new CrashItem(createItemSettings(ItemNames.CRASH_GEM_NAME).useCooldown(6));
 
     public static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM,

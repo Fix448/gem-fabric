@@ -2,6 +2,7 @@ package de.fixclient.gem_fabric.client;
 
 import de.fixclient.gem_fabric.datagen.ModModelProvider;
 import de.fixclient.gem_fabric.datagen.ModRepiceProvider;
+import de.fixclient.gem_fabric.datagen.ModTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -13,5 +14,6 @@ public class MainDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(ModModelProvider::new);
         pack.addProvider(ModRepiceProvider::new);
+        pack.addProvider(ModTagProvider::new);
     }
 }

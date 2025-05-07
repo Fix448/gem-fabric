@@ -27,6 +27,8 @@ public class Main implements ModInitializer {
         ItemManager.registerItem(ItemNames.ORANGE_GEM_NAME, ItemManager.ORANGE_GEM);
         ItemManager.registerItem(ItemNames.GOD_GEM_NAME, ItemManager.GOD_GEM);
 
+        ItemManager.registerItem(ItemNames.CRASH_GEM_NAME, ItemManager.CRASH_GEM);
+
 
         ItemTooltipCallback.EVENT.register(((itemStack, tooltipContext, tooltipType, list) -> {
             if (itemStack.isOf(ItemManager.ORANGE_GEM)) {

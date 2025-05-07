@@ -1,5 +1,6 @@
-package de.fixclient.gem_fabric.item;
+package de.fixclient.gem_fabric.item.season_2;
 
+import de.fixclient.gem_fabric.item.ItemManager;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
