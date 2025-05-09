@@ -1,5 +1,6 @@
 package de.fixclient.gem_fabric.item.season_2;
 
+import de.fixclient.gem_fabric.item.Gem;
 import de.fixclient.gem_fabric.item.ItemManager;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class Luft_Gem extends Item {
+public class Luft_Gem extends Gem {
     public Luft_Gem(Settings settings) {
         super(settings);
     }
@@ -39,14 +40,5 @@ public class Luft_Gem extends Item {
             }
         }
         return ActionResult.SUCCESS;
-    }
-
-    @Override
-    public void onItemEntityDestroyed(ItemEntity entity) {
-        if (!entity.getWorld().isClient) {
-            ServerWorld serverWorld = (ServerWorld) entity.getWorld();
-            BlockPos spawn = serverWorld.getSpawnPos();
-            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY() +1, spawn.getZ(), new ItemStack(ItemManager.LUFT_GEM)));
-        }
     }
 }
