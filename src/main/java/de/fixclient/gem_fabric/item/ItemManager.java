@@ -30,5 +30,4 @@ public class ItemManager {
     private static Item.Settings createItemSettings(String name) {
         return new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Main.MOD_ID, name)));
     }
-    
 }

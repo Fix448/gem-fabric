@@ -1,5 +1,6 @@
 package de.fixclient.gem_fabric.item;
 
+import de.fixclient.gem_fabric.util.Tags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
@@ -26,7 +27,16 @@ public class Gem extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, @NotNull ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
-
+    public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
+        if (stack.isIn(Tags.FIRST_GEM)) {
+            ItemOwners.FIRST_GEM_OWNER = entity;
+        } else if (stack.isIn(Tags.SECOND_GEM)) {
+            ItemOwners.SECOND_GEM_OWNER = entity;
+        } else if (stack.isIn(Tags.THIRD_GEM)) {
+            ItemOwners.THIRD_GEM_OWNER = entity;
+        } else if (stack.isIn(Tags.FOURTH_GEM)) {
+            ItemOwners.FOURTH_GEM_OWNER = entity;
+        }
     }
+
 }
