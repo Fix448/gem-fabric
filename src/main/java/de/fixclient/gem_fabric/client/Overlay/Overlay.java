@@ -18,7 +18,7 @@ public abstract class Overlay {
 
     public abstract void tick();
 
-    public abstract void render(DrawContext context, TextRenderer font);
+    public abstract void render(DrawContext context);
 
     public boolean shouldRenderInGUI() {
         return false;

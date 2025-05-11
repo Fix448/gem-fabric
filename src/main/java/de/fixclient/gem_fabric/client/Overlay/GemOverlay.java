@@ -7,7 +7,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 
 public class GemOverlay extends Overlay{
-    protected GemOverlay() {
+    public GemOverlay() {
         super("gems");
         setX(10);
         setY(10);
@@ -19,7 +19,7 @@ public class GemOverlay extends Overlay{
     }
 
     @Override
-    public void render(DrawContext context, TextRenderer font) {
+    public void render(DrawContext context) {
         Identifier healing_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem");
         Identifier teleport_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem");
         Identifier orange_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem");
