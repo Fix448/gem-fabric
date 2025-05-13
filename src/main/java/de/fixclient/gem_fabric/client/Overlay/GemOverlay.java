@@ -1,33 +1,43 @@
 package de.fixclient.gem_fabric.client.Overlay;
 
-import de.fixclient.gem_fabric.Main;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+
 public class GemOverlay extends Overlay{
-    public GemOverlay() {
-        super("gems");
-        setX(10);
-        setY(10);
+
+    public  void render(DrawContext context, RenderTickCounter counter) {
+
+        for (Identifier identifier : HUD) {
+            aviable.put(identifier, false);
+        }
+
+        List<Identifier> aviableElements = new ArrayList<>();
+
+        BiConsumer<Identifier, Boolean> action = (key, value) -> {
+            if (value) {
+                aviableElements.add(key);
+            }
+        };
+
+        aviable.forEach(action);
+
+        for (Identifier element : aviableElements) {
+            draw(aviableElements.toArray().length, element, context);
+        }
     }
 
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void render(DrawContext context) {
-        Identifier healing_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem");
-        Identifier teleport_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem");
-        Identifier orange_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem");
-        Identifier luft_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem");
-
-        context.drawTexture(RenderLayer::getGuiTextured, healing_gem_texture, getX(), getY(), 0, 0, 16, 16, 16, 16);
-        context.drawTexture(RenderLayer::getGuiTextured, teleport_gem_texture, getX(), getY(), 0, 0, 16, 16, 16, 16);
-        context.drawTexture(RenderLayer::getGuiTextured, orange_gem_texture, getX(), getY(), 0, 0, 16, 16, 16, 16);
-        context.drawTexture(RenderLayer::getGuiTextured, luft_gem_texture, getX(), getY(), 0, 0, 16, 16, 16, 16);
+    private DrawContext draw(int iteration, Identifier element, DrawContext context) {
+        int distance = iteration * 20;
+        for (int i = 0; i<=distance; i = i +20) {
+            context.drawTexture(RenderLayer::getGuiTextured, element, distance, 10, 0,0,16, 16, 16, 16);
+        }
+        return context;
     }
 }

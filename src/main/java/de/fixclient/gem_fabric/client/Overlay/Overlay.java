@@ -1,50 +1,19 @@
 package de.fixclient.gem_fabric.client.Overlay;
 
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import org.jetbrains.annotations.NotNull;
+import de.fixclient.gem_fabric.Main;
+import net.minecraft.util.Identifier;
 
-public abstract class Overlay {
-    private final String name;
+import java.util.HashMap;
+import java.util.List;
 
-    private boolean active = false;
-    private double x;
-    private double y;
+public abstract class Overlay{
+    public static final Identifier healing_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/heilungs_gem.png");
+    public static final Identifier teleport_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/teleport_gem.png");
+    public static final Identifier orange_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/luft_gem.png");
+    public static final Identifier luft_gem_texture = Identifier.of(Main.MOD_ID, "textures/item/orange_gem.png");
 
+    public List<Identifier> HUD = List.of(healing_gem_texture, teleport_gem_texture, orange_gem_texture, luft_gem_texture);
 
-    protected Overlay(String name) {
-        this.name = name;
-    }
+    public static HashMap<Identifier, Boolean> aviable = new HashMap<>();
 
-    public abstract void tick();
-
-    public abstract void render(DrawContext context);
-
-    public boolean shouldRenderInGUI() {
-        return false;
-    }
-
-    public @NotNull String getName() {
-        return name;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public int getX() {
-        return (int) Math.floor(x);
-    }
-
-    public int getY() {
-        return (int) Math.floor(y);
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
 }
