@@ -1,28 +1,14 @@
 package de.fixclient.gem_fabric;
 
-import de.fixclient.gem_fabric.client.Overlay.GemOverlay;
 import de.fixclient.gem_fabric.commands.Gem_Command;
 import de.fixclient.gem_fabric.item.ItemManager;
 import de.fixclient.gem_fabric.item.ItemNames;
-import de.fixclient.gem_fabric.util.Tags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.function.BiConsumer;
 
 public class Main implements ModInitializer {
 
@@ -78,7 +64,7 @@ public class Main implements ModInitializer {
         Gem_Command.register();
 
 
-        ServerTickEvents.END_SERVER_TICK.register(minecraftServer -> {
+        /*ServerTickEvents.END_SERVER_TICK.register(minecraftServer -> {
             for (PlayerEntity playerEntity : minecraftServer.getPlayerManager().getPlayerList()) {
 
 
@@ -97,30 +83,27 @@ public class Main implements ModInitializer {
                         box,
                         (entity) -> !entity.isSpectator()
                 );
-                try {
-                    if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-                        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-                            ItemStack stack = livingEntity.getEquippedStack(equipmentSlot);
-                            LOGGER.info("TestTest");
-                            if (stack.isIn(Tags.FIRST_GEM)) {
-                                GemOverlay.aviable.put(GemOverlay.healing_gem_texture, true);
-                            } else if (stack.isIn(Tags.SECOND_GEM)) {
-                                GemOverlay.aviable.put(GemOverlay.teleport_gem_texture, true);
-                            } else if (stack.isIn(Tags.THIRD_GEM)) {
-                                GemOverlay.aviable.put(GemOverlay.luft_gem_texture, true);
-                            } else if (stack.isIn(Tags.FOURTH_GEM)) {
-                                GemOverlay.aviable.put(GemOverlay.orange_gem_texture, true);
+                if (!(entityHitResult == null)) {
+                    if (!playerEntity.getEntityWorld().isClient) {
+                        if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
+                            for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+                                ItemStack stack = livingEntity.getEquippedStack(equipmentSlot);
+                                if (stack.isIn(Tags.FIRST_GEM)) {
+                                    GemOverlay.aviable.add(GemOverlay.healing_gem_texture);
+                                } else if (stack.isIn(Tags.SECOND_GEM)) {
+                                    GemOverlay.aviable.add(GemOverlay.teleport_gem_texture);
+                                } else if (stack.isIn(Tags.THIRD_GEM)) {
+                                    GemOverlay.aviable.add(GemOverlay.luft_gem_texture);
+                                } else if (stack.isIn(Tags.FOURTH_GEM)) {
+                                    GemOverlay.aviable.add(GemOverlay.orange_gem_texture);
+                                }
                             }
                         }
                     }
                 }
-                 catch (NullPointerException e){
-                     BiConsumer<Identifier, Boolean> reset = (identifier, aBoolean) -> {
 
-                     };
-                 }
             }
-        });
+        });*/
 
     }
 }
