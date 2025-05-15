@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -31,15 +32,15 @@ public class Gem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         MinecraftServer minecraftServer = world.getServer();
-        if (entity instanceof LivingEntity livingEntity) {
+        if (entity instanceof PlayerEntity playerEntity) {
             if (stack.isIn(Tags.FIRST_GEM)) {
-                ItemOwners.FIRST_GEM_OWNER = livingEntity;
+                ItemOwners.FIRST_GEM_OWNER = playerEntity;
             } else if (stack.isIn(Tags.SECOND_GEM)) {
-                ItemOwners.SECOND_GEM_OWNER = livingEntity;
+                ItemOwners.SECOND_GEM_OWNER = playerEntity;
             } else if (stack.isIn(Tags.THIRD_GEM)) {
-                ItemOwners.THIRD_GEM_OWNER = livingEntity;
+                ItemOwners.THIRD_GEM_OWNER = playerEntity;
             } else if (stack.isIn(Tags.FOURTH_GEM)) {
-                ItemOwners.FOURTH_GEM_OWNER = livingEntity;
+                ItemOwners.FOURTH_GEM_OWNER = playerEntity;
             }
         }
     }

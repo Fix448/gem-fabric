@@ -13,5 +13,7 @@
   "tooltip.gem_fabric.teleport_gem.shift-down" : "You use this Item like an Ender Pearl",
   "tooltip.gem_fabric.orange_gem.shift-down" : "When you use this Item, nearby mobs are getting damage, depending on your fall distance",
   "tooltip.gem_fabric.heilungs_gem.shift-down" : "When you use this Item, you can't die for 1 minute",
-  "tooltip.gem_fabric.god_gem.shift-down" : "Gives you Op!"
+  "tooltip.gem_fabric.god_gem.shift-down" : "Gives you Op!",
+
+  "command.gem_fabric.status_filling" : " has "
 }

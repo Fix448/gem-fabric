@@ -7,11 +7,11 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class Tags {
-    public static final TagKey<Item> FIRST_GEM = createTag("first_gem_tag");
-    public static final TagKey<Item> SECOND_GEM = createTag("second_gem_tag");
-    public static final TagKey<Item> THIRD_GEM = createTag("third_gem_tag");
-    public static final TagKey<Item> FOURTH_GEM = createTag("fourth_gem_tag");
-    public static final TagKey<Item> GOD_GEM = createTag("god_gem_tag");
+    public static final TagKey<Item> FIRST_GEM = createTag("tag.item.gem_fabric.first_gem_tag");
+    public static final TagKey<Item> SECOND_GEM = createTag("tag.item.gem_fabric.second_gem_tag");
+    public static final TagKey<Item> THIRD_GEM = createTag("tag.item.gem_fabric.third_gem_tag");
+    public static final TagKey<Item> FOURTH_GEM = createTag("tag.item.gem_fabric.fourth_gem_tag");
+    public static final TagKey<Item> GOD_GEM = createTag("tag.item.gem_fabric.god_gem_tag");
 
     public static TagKey<Item> createTag(String path) {
         return TagKey.of(RegistryKeys.ITEM, Identifier.of(Main.MOD_ID, path));

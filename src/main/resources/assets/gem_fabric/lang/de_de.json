@@ -11,5 +11,7 @@
   "tooltip.gem_fabric.teleport_gem.shift-down" : "Du kannst den Gegenstand wie einer Enderperle benutzen",
   "tooltip.gem_fabric.orange_gem.shift-down" : "Nahegelegene Lebewesen bekommen Schaden, basierend auf der Höhe, die du heruntergefallen bist",
   "tooltip.gem_fabric.heilungs_gem.shift-down" : "Du wirst für eine Minute unsterblich",
-  "tooltip.gem_fabric.god_gem.shift-down" : "Gibt dir Adminrechte!"
+  "tooltip.gem_fabric.god_gem.shift-down" : "Gibt dir Adminrechte!",
+
+  "command.gem_fabric.status_filling" : " hat "
 }

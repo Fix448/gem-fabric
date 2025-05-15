@@ -1,10 +1,10 @@
 package de.fixclient.gem_fabric.item;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class ItemOwners {
-    public static LivingEntity FIRST_GEM_OWNER;
-    public static LivingEntity SECOND_GEM_OWNER;
-    public static LivingEntity THIRD_GEM_OWNER;
-    public static LivingEntity FOURTH_GEM_OWNER;
+    public static PlayerEntity FIRST_GEM_OWNER;
+    public static PlayerEntity SECOND_GEM_OWNER;
+    public static PlayerEntity THIRD_GEM_OWNER;
+    public static PlayerEntity FOURTH_GEM_OWNER;
 }

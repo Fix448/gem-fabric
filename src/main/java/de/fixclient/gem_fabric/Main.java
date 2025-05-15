@@ -1,6 +1,7 @@
 package de.fixclient.gem_fabric;
 
 import de.fixclient.gem_fabric.commands.Gem_Command;
+import de.fixclient.gem_fabric.commands.StatusCommand;
 import de.fixclient.gem_fabric.item.ItemManager;
 import de.fixclient.gem_fabric.item.ItemNames;
 import net.fabricmc.api.ModInitializer;
@@ -62,48 +63,7 @@ public class Main implements ModInitializer {
         }));
 
         Gem_Command.register();
-
-
-        /*ServerTickEvents.END_SERVER_TICK.register(minecraftServer -> {
-            for (PlayerEntity playerEntity : minecraftServer.getPlayerManager().getPlayerList()) {
-
-
-                Vec3d eyepos = playerEntity.getCameraPosVec(1.0f);
-                Vec3d lookVec = playerEntity.getRotationVec(1.0f);
-                Vec3d reachVec = eyepos.add(lookVec.multiply(10.0d));
-
-                Box box = playerEntity.getBoundingBox().stretch(lookVec.multiply(10.0D))
-                        .expand(1.0d, 1.0d, 1.0d);
-
-                EntityHitResult entityHitResult = ProjectileUtil.getEntityCollision(
-                        playerEntity.getEntityWorld(),
-                        playerEntity,
-                        eyepos,
-                        reachVec,
-                        box,
-                        (entity) -> !entity.isSpectator()
-                );
-                if (!(entityHitResult == null)) {
-                    if (!playerEntity.getEntityWorld().isClient) {
-                        if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-                            for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-                                ItemStack stack = livingEntity.getEquippedStack(equipmentSlot);
-                                if (stack.isIn(Tags.FIRST_GEM)) {
-                                    GemOverlay.aviable.add(GemOverlay.healing_gem_texture);
-                                } else if (stack.isIn(Tags.SECOND_GEM)) {
-                                    GemOverlay.aviable.add(GemOverlay.teleport_gem_texture);
-                                } else if (stack.isIn(Tags.THIRD_GEM)) {
-                                    GemOverlay.aviable.add(GemOverlay.luft_gem_texture);
-                                } else if (stack.isIn(Tags.FOURTH_GEM)) {
-                                    GemOverlay.aviable.add(GemOverlay.orange_gem_texture);
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
-        });*/
+        StatusCommand.register();
 
     }
 }
