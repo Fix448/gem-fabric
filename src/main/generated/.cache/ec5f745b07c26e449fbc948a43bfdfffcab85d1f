@@ -1,6 +1,6 @@
 // 1.21.5	-999999999-01-01T00:00:00	gem_fabric/Tags for minecraft:item
-91002c4beaa8d64b42af1f99a827d7423dadfe70 data/gem_fabric/tags/item/first_gem_tag.json
-2c62918b536cc2236a3cda63c969f568c1eeb062 data/gem_fabric/tags/item/fourth_gem_tag.json
-8546f0843eb622b69e35cdef51580a0d56cd7519 data/gem_fabric/tags/item/god_gem_tag.json
-497602a9027c440c022873091aa59269616eaa9b data/gem_fabric/tags/item/second_gem_tag.json
-21cd7c944f3b049ca19ac7430384f88113c78b0b data/gem_fabric/tags/item/third_gem_tag.json
+91002c4beaa8d64b42af1f99a827d7423dadfe70 data/gem_fabric/tags/item/tag.item.gem_fabric.first_gem_tag.json
+2c62918b536cc2236a3cda63c969f568c1eeb062 data/gem_fabric/tags/item/tag.item.gem_fabric.fourth_gem_tag.json
+8546f0843eb622b69e35cdef51580a0d56cd7519 data/gem_fabric/tags/item/tag.item.gem_fabric.god_gem_tag.json
+497602a9027c440c022873091aa59269616eaa9b data/gem_fabric/tags/item/tag.item.gem_fabric.second_gem_tag.json
+21cd7c944f3b049ca19ac7430384f88113c78b0b data/gem_fabric/tags/item/tag.item.gem_fabric.third_gem_tag.json

@@ -1,19 +1,20 @@
 package de.fixclient.gem_fabric.item.season_2;
 
 import de.fixclient.gem_fabric.item.Gem;
-import de.fixclient.gem_fabric.item.ItemManager;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 
 
 public class Heilungs_Gem extends Gem {
@@ -23,9 +24,34 @@ public class Heilungs_Gem extends Gem {
 
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1200, 127));
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1200, 127));
-        user.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 1200));
+        if (user.isInSneakingPose()) {
+            if (!world.isClient) {
+                ServerWorld serverWorld = (ServerWorld) world;
+                List<LivingEntity> entityList = serverWorld.getNonSpectatingEntities(LivingEntity.class, user.getBoundingBox().expand(4.0, 2.0, 4.0));
+                if (!entityList.isEmpty()) {
+                    for (LivingEntity livingEntity : entityList) {
+                        if (!livingEntity.equals(user)) {
+                            double distance = user.squaredDistanceTo(livingEntity);
+                            if (distance < 16.0) {
+                                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 127));
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1200, 127));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 1200));
+
+        }
         return ActionResult.SUCCESS;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
+        super.inventoryTick(stack, world, entity, slot);
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, 1));
+        }
     }
 }

@@ -7,4 +7,6 @@ public class ItemOwners {
     public static PlayerEntity SECOND_GEM_OWNER;
     public static PlayerEntity THIRD_GEM_OWNER;
     public static PlayerEntity FOURTH_GEM_OWNER;
+
+    public static PlayerEntity ON_USING_ORANGE_GEM;
 }

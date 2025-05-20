@@ -4,12 +4,19 @@ import de.fixclient.gem_fabric.commands.Gem_Command;
 import de.fixclient.gem_fabric.commands.StatusCommand;
 import de.fixclient.gem_fabric.item.ItemManager;
 import de.fixclient.gem_fabric.item.ItemNames;
+import de.fixclient.gem_fabric.item.ItemOwners;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class Main implements ModInitializer {
 
@@ -64,6 +71,30 @@ public class Main implements ModInitializer {
 
         Gem_Command.register();
         StatusCommand.register();
+
+        ServerTickEvents.END_SERVER_TICK.register(minecraftServer -> {
+            for (ServerPlayerEntity serverPlayer : minecraftServer.getPlayerManager().getPlayerList()) {
+                if (serverPlayer.equals(ItemOwners.ON_USING_ORANGE_GEM)) {
+                    ServerWorld serverWorld = serverPlayer.getServerWorld();
+                    List<LivingEntity> entityList = serverWorld.getNonSpectatingEntities(LivingEntity.class, serverPlayer.getBoundingBox().expand(4.0, 2.0, 4.0));
+                    if (!entityList.isEmpty()) {
+                        for (LivingEntity livingEntity : entityList) {
+                            if (!livingEntity.equals(ItemOwners.ON_USING_ORANGE_GEM)) {
+                                double distance = serverPlayer.squaredDistanceTo(livingEntity);
+                                if (distance < 16.0d) {
+                                    double f = serverPlayer.fallDistance;
+                                    if (serverPlayer.isOnGround() && f > 1.5) {
+                                        double g = 22.0 + f - 8.0;
+                                        livingEntity.damage(serverWorld, livingEntity.getDamageSources().maceSmash(ItemOwners.ON_USING_ORANGE_GEM), (float) g);
+                                        ItemOwners.ON_USING_ORANGE_GEM = null;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
     }
 }
