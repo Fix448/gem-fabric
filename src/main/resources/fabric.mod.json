@@ -11,13 +11,13 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "de.fixclient.gem_fabric.client.MainDataGenerator"
+      "me.fixclient.gem_fabric.client.MainDataGenerator"
     ],
     "client": [
-      "de.fixclient.gem_fabric.client.MainClient"
+      "me.fixclient.gem_fabric.client.MainClient"
     ],
     "main": [
-      "de.fixclient.gem_fabric.Main"
+      "me.fixclient.gem_fabric.Main"
     ]
   },
   "mixins": [

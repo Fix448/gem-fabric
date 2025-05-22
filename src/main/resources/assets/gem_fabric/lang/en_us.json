@@ -1,5 +1,5 @@
 {
-  "item.gem_fabric.heilungs_gem" : "§5§kkkk§r§r§5 Healing Gem §r§5§kkkk§r§r",
+  "item.gem_fabric.healing_gem": "§5§kkkk§r§r§5 Healing Gem §r§5§kkkk§r§r",
   "item.gem_fabric.teleport_gem" : "§2§kkkk§r§r§2 Teleportation Gem §r§2§kkkk§r§r",
   "item.gem_fabric.luft_gem" : "§b§kkkk§r§r§b Air Gem §r§b§kkkk§r§r",
   "item.gem_fabric.orange_gem" : "§6§kkkk§r§r§6 Orange Gem §r§6§kkkk§r§r",
@@ -12,7 +12,7 @@
   "tooltip.gem_fabric.luft_gem.shift-down" : "When you use this Item, nearby mobs fly towards the clouds",
   "tooltip.gem_fabric.teleport_gem.shift-down" : "You use this Item like an Ender Pearl",
   "tooltip.gem_fabric.orange_gem.shift-down" : "When you use this Item, nearby mobs are getting damage, depending on your fall distance",
-  "tooltip.gem_fabric.heilungs_gem.shift-down" : "When you use this Item, you can't die for 1 minute",
+  "tooltip.gem_fabric.healing_gem.shift-down": "When you use this Item, you can't die for 1 minute",
   "tooltip.gem_fabric.god_gem.shift-down" : "Gives you Op!",
 
   "command.gem_fabric.status_filling" : " has "

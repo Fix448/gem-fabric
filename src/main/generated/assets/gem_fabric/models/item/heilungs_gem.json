@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gem_fabric:item/heilungs_gem"
-  }
-}
