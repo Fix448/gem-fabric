@@ -1,6 +1,7 @@
 package me.fixclient.gem_fabric.item.season_2;
 
 import me.fixclient.gem_fabric.item.Gem;
+import me.fixclient.gem_fabric.util.GemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -56,7 +57,7 @@ public class Teleportation_Gem extends Gem {
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         super.inventoryTick(stack, world, entity, slot);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 1, 2));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 1, GemSettings.TELEPORTATION_GEM_HASTE_AMPLIFIER));
         }
     }
 }

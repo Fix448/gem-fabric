@@ -1,6 +1,7 @@
 package me.fixclient.gem_fabric.item.season_2;
 
 import me.fixclient.gem_fabric.item.Gem;
+import me.fixclient.gem_fabric.util.GemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -24,7 +25,7 @@ public class Healing_Gem extends Gem {
 
     /**
      * If the user is sneaking, Entities around it can't move, because they have slowness 127.
-     * If not, the Player can't die for one minute*/
+     * If not, the Player can't die for a half minute*/
 
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
@@ -37,15 +38,15 @@ public class Healing_Gem extends Gem {
                         if (!livingEntity.equals(user)) {
                             double distance = user.squaredDistanceTo(livingEntity);
                             if (distance < 16.0) {
-                                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 127));
+                                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, GemSettings.HEALING_GEM_SLOWNESS_DURATION, 127));
                             }
                         }
                     }
                 }
             }
         } else {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1200, 127));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 1200));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, GemSettings.HEALING_GEM_INVULNERABILITY_DURATION, 127));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, GemSettings.HEALING_GEM_INVULNERABILITY_DURATION));
 
         }
         return ActionResult.SUCCESS;
@@ -55,7 +56,7 @@ public class Healing_Gem extends Gem {
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         super.inventoryTick(stack, world, entity, slot);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, 1));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, GemSettings.HEALING_GEM_REGENERATION_AMPLIFIER));
         }
     }
 }

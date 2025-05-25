@@ -3,6 +3,7 @@ package me.fixclient.gem_fabric.item.season_2;
 import me.fixclient.gem_fabric.Main;
 import me.fixclient.gem_fabric.item.Gem;
 import me.fixclient.gem_fabric.item.ItemOwners;
+import me.fixclient.gem_fabric.util.GemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -49,7 +50,7 @@ public class Orange_Gem extends Gem {
                 }
             }
         } else {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 2, 127));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, GemSettings.ORANGE_GEM_LEVITATION_DURATION, 127));
             ItemOwners.ON_USING_ORANGE_GEM = user;
         }
         return ActionResult.SUCCESS;
@@ -62,7 +63,7 @@ public class Orange_Gem extends Gem {
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         super.inventoryTick(stack, world, entity, slot);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1, 1));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1, GemSettings.ORANGE_GEM_RESISTANCE_AMPLIFIER));
         }
     }
 }

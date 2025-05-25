@@ -1,6 +1,6 @@
 package me.fixclient.gem_fabric;
 
-import me.fixclient.gem_fabric.commands.Gem_Command;
+import me.fixclient.gem_fabric.commands.GemCommand;
 import me.fixclient.gem_fabric.commands.StatusCommand;
 import me.fixclient.gem_fabric.item.ItemManager;
 import me.fixclient.gem_fabric.item.ItemNames;
@@ -67,7 +67,7 @@ public class Main implements ModInitializer {
             }
         }));
 
-        Gem_Command.register();
+        GemCommand.register();
         StatusCommand.register();
 
         ServerTickEvents.END_SERVER_TICK.register(minecraftServer -> {
