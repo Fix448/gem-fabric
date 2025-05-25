@@ -1,5 +1,7 @@
 # The gem mod
 
+It's a FabricMC Mod for the Minecraft Version 1.21.5.
+
 This minecraft mod for 1.21.5 adds for powerful gems to the game. The first Gem is the healing gem, wich makes you invulnerable for one minute and if you sneak, entities around you can not move for a while.
 
 Theres also an air gem, which lets the entities around you fly towards the sky and if you sneak, you get a boost that lets you fly upwards and glide downwards.
