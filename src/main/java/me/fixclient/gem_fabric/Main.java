@@ -5,17 +5,21 @@ import me.fixclient.gem_fabric.commands.StatusCommand;
 import me.fixclient.gem_fabric.item.ItemManager;
 import me.fixclient.gem_fabric.item.ItemNames;
 import me.fixclient.gem_fabric.item.ItemOwners;
+import me.fixclient.gem_fabric.util.GemSettings;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.WorldSavePath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class Main implements ModInitializer {
@@ -31,6 +35,8 @@ public class Main implements ModInitializer {
         ItemManager.registerItem(ItemNames.LUFT_GEM_NAME, ItemManager.AIR_GEM);
         ItemManager.registerItem(ItemNames.ORANGE_GEM_NAME, ItemManager.ORANGE_GEM);
         ItemManager.registerItem(ItemNames.GOD_GEM_NAME, ItemManager.GOD_GEM);
+
+
 
 
         ItemTooltipCallback.EVENT.register(((itemStack, tooltipContext, tooltipType, list) -> {
@@ -93,6 +99,8 @@ public class Main implements ModInitializer {
                 }
             }
         });
-
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+            GemSettings.loadSettings(Path.of(server.getSavePath(WorldSavePath.ROOT) + "/gem_settings.json"));
+        });
     }
 }
