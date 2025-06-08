@@ -11,5 +11,6 @@ With /gem start, you can place a structure at the world spawn point, and with /g
 
 To customise things further, use the command /gem settings <gem> <modifier> <value>.
 
+Please make sure that if you have customized some things, you have typed in /gem save!
 
 The idea is from the mystic SMP and the videos are [here](https://www.youtube.com/watch?v=VZSXLkJRAT8&list=PLflCuSjH2M8pAiRPs5mSEp1M2mI_W9G2L)  (it's a german project).
