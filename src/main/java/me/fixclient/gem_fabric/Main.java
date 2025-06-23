@@ -79,7 +79,7 @@ public class Main implements ModInitializer {
         ServerTickEvents.END_SERVER_TICK.register(minecraftServer -> {
             for (ServerPlayerEntity serverPlayer : minecraftServer.getPlayerManager().getPlayerList()) {
                 if (serverPlayer.equals(ItemOwners.ON_USING_ORANGE_GEM)) {
-                    ServerWorld serverWorld = serverPlayer.getServerWorld();
+                    ServerWorld serverWorld = serverPlayer.getWorld();
                     List<LivingEntity> entityList = serverWorld.getNonSpectatingEntities(LivingEntity.class, serverPlayer.getBoundingBox().expand(4.0, 2.0, 4.0));
                     if (!entityList.isEmpty()) {
                         for (LivingEntity livingEntity : entityList) {
