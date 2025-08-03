@@ -2,10 +2,12 @@ package me.fixclient.gem_fabric.commands;
 
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import me.fixclient.gem_fabric.Main;
 import me.fixclient.gem_fabric.item.ItemManager;
 import me.fixclient.gem_fabric.util.GemSettings;
+import me.fixclient.gem_fabric.util.GemSettingsSuggester;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -25,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 
 public class GemCommand {
 
@@ -35,109 +36,19 @@ public class GemCommand {
                 .then(CommandManager.literal("start").executes(GemCommand::startStructure))
                 .then(CommandManager.literal("drop").executes(GemCommand::dropGem))
                 .then(CommandManager.literal("settings")
-                        .then(CommandManager.literal("general")
-                                .then(CommandManager.literal("gem_spawn_height")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.GEM_SPAWN_HEIGHT = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                        )
-                        .then(CommandManager.literal("healing_gem")
-                                .then(CommandManager.literal("invulnerability_duration")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.HEALING_GEM_INVULNERABILITY_DURATION = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                                .then(CommandManager.literal("slowness_duration")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.HEALING_GEM_SLOWNESS_DURATION = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                                .then(CommandManager.literal("regeneration_amplifier")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.HEALING_GEM_REGENERATION_AMPLIFIER = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                        )
-                        .then(CommandManager.literal("air_gem")
-                                .then(CommandManager.literal("levitation_duration")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.AIR_GEM_LEVITATION_DURATION = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                                .then(CommandManager.literal("levitation_amplifier")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.AIR_GEM_LEVITATION_AMPLIFIER = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                                .then(CommandManager.literal("slow_falling_duration")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.AIR_GEM_SLOW_FALLING_DURATION = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                                .then(CommandManager.literal("dolphins_grace_amplifier")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.AIR_GEM_DOLPHINS_GRACE_AMPLIFIER = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                        )
-                        .then(CommandManager.literal("orange_gem")
-                                .then(CommandManager.literal("levitation_duration")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.ORANGE_GEM_LEVITATION_DURATION = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                                .then(CommandManager.literal("resistance_amplifier")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.ORANGE_GEM_RESISTANCE_AMPLIFIER = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                        )
-                        .then(CommandManager.literal("teleportation_gem")
-                                .then(CommandManager.literal("haste_amplifier")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(commandContext -> {
-                                                    GemSettings.TELEPORTATION_GEM_HASTE_AMPLIFIER = IntegerArgumentType.getInteger(commandContext, "value");
-                                                    return 1;
-                                                })
-                                        )
+                        .then(CommandManager.argument("setting", StringArgumentType.string())
+                                .suggests(new GemSettingsSuggester())
+                                .then(CommandManager.argument("value", IntegerArgumentType.integer())
+                                        .executes(GemCommand::settings)
                                 )
                         )
                 )
                 .then(CommandManager.literal("save")
                         .executes(GemCommand::save)
                 )
-        )));
+        )
+
+        ));
     }
 
     private static int startStructure(CommandContext<ServerCommandSource> context) {
@@ -179,17 +90,18 @@ public class GemCommand {
     }
 
     private static @NotNull List<ItemEntity> getItemEntities(ServerWorld serverWorld, BlockPos spawn) {
-        ItemEntity healing = new ItemEntity(serverWorld, spawn.getX() +0.5, spawn.getY()+ GemSettings.GEM_SPAWN_HEIGHT, spawn.getZ() +0.5, new ItemStack(ItemManager.HEALING_GEM));
-        ItemEntity luft = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.GEM_SPAWN_HEIGHT, spawn.getZ()+0.5, new ItemStack(ItemManager.AIR_GEM));
-        ItemEntity orange = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.GEM_SPAWN_HEIGHT, spawn.getZ()+0.5, new ItemStack(ItemManager.ORANGE_GEM));
-        ItemEntity teleport = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.GEM_SPAWN_HEIGHT, spawn.getZ()+0.5, new ItemStack(ItemManager.TELEPORT_GEM));
+        ItemEntity healing = new ItemEntity(serverWorld, spawn.getX() +0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ() +0.5, new ItemStack(ItemManager.HEALING_GEM));
+        ItemEntity luft = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ()+0.5, new ItemStack(ItemManager.AIR_GEM));
+        ItemEntity orange = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ()+0.5, new ItemStack(ItemManager.ORANGE_GEM));
+        ItemEntity teleport = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ()+0.5, new ItemStack(ItemManager.TELEPORT_GEM));
         return List.of(teleport, healing, luft, orange);
     }
 
     private static int save(CommandContext<ServerCommandSource> context) {
         Path path = Path.of(context.getSource().getServer().getSavePath(WorldSavePath.ROOT) + "/gem_settings.json");
         Main.LOGGER.info(path.toString());
-        Map<String, Integer> settings = new java.util.HashMap<>(Map.of(
+        GemSettings.updateSettings();
+        /*Map<String, Integer> settings = new java.util.HashMap<>(Map.of(
                 "gem_spawn_height", GemSettings.GEM_SPAWN_HEIGHT,
                 "healing_gem_slowness_duration", GemSettings.HEALING_GEM_SLOWNESS_DURATION,
                 "healing_gem_invulnerability_duration", GemSettings.HEALING_GEM_INVULNERABILITY_DURATION,
@@ -201,8 +113,17 @@ public class GemCommand {
                 "orange_gem_levitation_duration", GemSettings.ORANGE_GEM_LEVITATION_DURATION,
                 "orange_gem_resistance_amplifier", GemSettings.ORANGE_GEM_RESISTANCE_AMPLIFIER
         ));
-        settings.put("teleportation_gem_haste_amplifier", GemSettings.TELEPORTATION_GEM_HASTE_AMPLIFIER);
-        GemSettings.saveSettings(path, settings);
+        settings.put("teleportation_gem_haste_amplifier", GemSettings.TELEPORTATION_GEM_HASTE_AMPLIFIER);*/
+        GemSettings.saveSettings(path, GemSettings.SETTINGS);
+        return 1;
+    }
+
+    private static int settings(CommandContext<ServerCommandSource> context) {
+        String setting = StringArgumentType.getString(context, "setting");
+        int value = IntegerArgumentType.getInteger(context, "value");
+        if (GemSettings.SETTINGS.containsKey(setting)) {
+            GemSettings.SETTINGS.put(setting, value);
+        }
         return 1;
     }
 }

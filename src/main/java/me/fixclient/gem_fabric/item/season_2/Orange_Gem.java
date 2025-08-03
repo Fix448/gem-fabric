@@ -50,7 +50,7 @@ public class Orange_Gem extends Gem {
                 }
             }
         } else {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, GemSettings.ORANGE_GEM_LEVITATION_DURATION, 127));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, GemSettings.SETTINGS.get("orange_gem_levitation_duration"), 127));
             ItemOwners.ON_USING_ORANGE_GEM = user;
         }
         return ActionResult.SUCCESS;
@@ -63,7 +63,7 @@ public class Orange_Gem extends Gem {
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         super.inventoryTick(stack, world, entity, slot);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1, GemSettings.ORANGE_GEM_RESISTANCE_AMPLIFIER));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1, GemSettings.SETTINGS.get("orange_gem_resistance_amplifier")));
         }
     }
 }

@@ -30,8 +30,8 @@ public class Air_Gem extends Gem {
     @Override
     public ActionResult use(World world, @NotNull PlayerEntity user, Hand hand) {
         if (user.isInSneakingPose()) {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, GemSettings.AIR_GEM_LEVITATION_DURATION, GemSettings.AIR_GEM_LEVITATION_AMPLIFIER));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, GemSettings.AIR_GEM_SLOW_FALLING_DURATION, 2));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, GemSettings.SETTINGS.get("air_gem_levitation_duration"), GemSettings.SETTINGS.get("air_gem_levitation_amplifier")));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, GemSettings.SETTINGS.get("air_gem_slow_falling_duration"), 2));
         } else {
             if (!world.isClient) {
                 ServerWorld serverWorld = (ServerWorld) world;
@@ -59,7 +59,7 @@ public class Air_Gem extends Gem {
         super.inventoryTick(stack, world, entity, slot);
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.damage(world, livingEntity.getDamageSources().fall(), 0);
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.DOLPHINS_GRACE, 1, GemSettings.AIR_GEM_DOLPHINS_GRACE_AMPLIFIER));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.DOLPHINS_GRACE, 1, GemSettings.SETTINGS.get("air_gem_dolphins_grace_amplifier")));
         }
     }
 }

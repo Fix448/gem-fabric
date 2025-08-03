@@ -57,7 +57,7 @@ public class Teleportation_Gem extends Gem {
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         super.inventoryTick(stack, world, entity, slot);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 1, GemSettings.TELEPORTATION_GEM_HASTE_AMPLIFIER));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 1, GemSettings.SETTINGS.get("teleportation_gem_haste_amplifier")));
         }
     }
 }

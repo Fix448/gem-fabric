@@ -38,15 +38,15 @@ public class Healing_Gem extends Gem {
                         if (!livingEntity.equals(user)) {
                             double distance = user.squaredDistanceTo(livingEntity);
                             if (distance < 16.0) {
-                                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, GemSettings.HEALING_GEM_SLOWNESS_DURATION, 127));
+                                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, GemSettings.SETTINGS.get("healing_gem_slowness_duration"), 127));
                             }
                         }
                     }
                 }
             }
         } else {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, GemSettings.HEALING_GEM_INVULNERABILITY_DURATION, 127));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, GemSettings.HEALING_GEM_INVULNERABILITY_DURATION));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, GemSettings.SETTINGS.get("healing_gem_invulnerability_duration"), 127));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, GemSettings.SETTINGS.get("healing_gem_invulnerability_duration")));
 
         }
         return ActionResult.SUCCESS;
@@ -56,7 +56,7 @@ public class Healing_Gem extends Gem {
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         super.inventoryTick(stack, world, entity, slot);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, GemSettings.HEALING_GEM_REGENERATION_AMPLIFIER));
+            livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, GemSettings.SETTINGS.get("healing_gem_regeneration_amplifier")));
         }
     }
 }

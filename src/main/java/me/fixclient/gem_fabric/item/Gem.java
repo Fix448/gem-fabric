@@ -26,7 +26,7 @@ public class Gem extends Item {
         if (!entity.getWorld().isClient) {
             ServerWorld serverWorld = (ServerWorld) entity.getWorld();
             BlockPos spawn = serverWorld.getSpawnPos();
-            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY() + GemSettings.GEM_SPAWN_HEIGHT, spawn.getZ(), new ItemStack(this)));
+            serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY() + GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ(), new ItemStack(this)));
         }
     }
 
