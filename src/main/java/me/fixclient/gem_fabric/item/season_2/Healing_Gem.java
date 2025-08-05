@@ -19,8 +19,8 @@ import java.util.List;
 
 
 public class Healing_Gem extends Gem {
-    public Healing_Gem(Settings settings) {
-        super(settings);
+    public Healing_Gem(Settings settings, String translatableKey) {
+        super(settings, true, translatableKey);
     }
 
     /**

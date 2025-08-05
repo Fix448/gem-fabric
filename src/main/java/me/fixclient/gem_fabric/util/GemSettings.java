@@ -39,17 +39,8 @@ public class GemSettings {
         }
     }
 
-    public static void updateSettings() {
+    public static void createSettings() {
         SETTINGS.put("gem_spawn_height", 5);
-        SETTINGS.put("healing_gem_slowness_duration", 200);
-        SETTINGS.put("healing_gem_invulnerability_duration", 600);
-        SETTINGS.put("healing_gem_regeneration_amplifier", 1);
-        SETTINGS.put("air_gem_levitation_duration", 1);
-        SETTINGS.put("air_gem_levitation_amplifier", 127);
-        SETTINGS.put("air_gem_slow_falling_duration", 150);
-        SETTINGS.put("air_gem_dolphins_grace_amplifier", 3);
-        SETTINGS.put("orange_gem_levitation_duration", 2);
         SETTINGS.put("orange_gem_resistance_amplifier", 1);
-        SETTINGS.put("teleportation_gem_haste_amplifier", 2);
     }
 }

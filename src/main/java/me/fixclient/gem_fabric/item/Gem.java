@@ -14,8 +14,12 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class Gem extends Item {
-    public Gem(Settings settings) {
+    boolean shouldRespawnOnSpawn;
+    String translatableKey;
+    public Gem(Settings settings, boolean shouldRespawnOnSpawn, String translatableKey) {
         super(settings);
+        this.shouldRespawnOnSpawn = shouldRespawnOnSpawn;
+        this.translatableKey = translatableKey;
     }
 
     /**
@@ -23,7 +27,7 @@ public class Gem extends Item {
 
     @Override
     public void onItemEntityDestroyed(@NotNull ItemEntity entity) {
-        if (!entity.getWorld().isClient) {
+        if (!entity.getWorld().isClient && shouldRespawnOnSpawn) {
             ServerWorld serverWorld = (ServerWorld) entity.getWorld();
             BlockPos spawn = serverWorld.getSpawnPos();
             serverWorld.spawnEntity(new ItemEntity(entity.getWorld(), spawn.getX(), spawn.getY() + GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ(), new ItemStack(this)));
@@ -35,15 +39,7 @@ public class Gem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         if (entity instanceof PlayerEntity playerEntity) {
-            if (stack.isOf(ItemManager.HEALING_GEM)) {
-                ItemOwners.HEALING_GEM_OWNER = playerEntity;
-            } else if (stack.isOf(ItemManager.AIR_GEM)) {
-                ItemOwners.AIR_GEM_OWNER = playerEntity;
-            } else if (stack.isOf(ItemManager.TELEPORT_GEM)) {
-                ItemOwners.TELEPORT_GEM_OWNER = playerEntity;
-            } else if (stack.isOf(ItemManager.ORANGE_GEM)) {
-                ItemOwners.ORANGE_GEM_OWNER = playerEntity;
-            }
+            ItemOwners.itemOwners.put(translatableKey, playerEntity);
         }
     }
 }

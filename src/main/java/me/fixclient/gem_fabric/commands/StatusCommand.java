@@ -1,11 +1,15 @@
 package me.fixclient.gem_fabric.commands;
 
 import com.mojang.brigadier.context.CommandContext;
+import me.fixclient.gem_fabric.Main;
 import me.fixclient.gem_fabric.item.ItemOwners;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+
+import java.util.function.BiConsumer;
 
 public class StatusCommand {
 
@@ -15,30 +19,14 @@ public class StatusCommand {
 
     private static int status(CommandContext<ServerCommandSource> context) {
         var player = context.getSource().getPlayer();
-        if (!(player == null)) {
-            if (!(ItemOwners.HEALING_GEM_OWNER == null)) {
-                player.sendMessage(Text.translatable("item.gem_fabric.healing_gem")
+        BiConsumer<String, PlayerEntity> sendMessages = ((itemName, GemOwner) -> {
+            if (!(GemOwner == null)) {
+                player.sendMessage(Text.translatable(itemName)
                         .append(Text.translatable("command.gem_fabric.status_filling"))
-                        .append(ItemOwners.HEALING_GEM_OWNER.getName()));
+                        .append(GemOwner.getName()));
             }
-            if (!(ItemOwners.TELEPORT_GEM_OWNER == null)) {
-                player.sendMessage(Text.translatable("item.gem_fabric.luft_gem")
-                        .append(Text.translatable("command.gem_fabric.status_filling"))
-                        .append(ItemOwners.TELEPORT_GEM_OWNER.getName()));
-            }
-
-            if (!(ItemOwners.AIR_GEM_OWNER == null)) {
-                player.sendMessage(Text.translatable("item.gem_fabric.teleport_gem")
-                        .append(Text.translatable("command.gem_fabric.status_filling"))
-                        .append(ItemOwners.AIR_GEM_OWNER.getName()));
-            }
-
-            if (!(ItemOwners.ORANGE_GEM_OWNER == null)) {
-                player.sendMessage(Text.translatable("item.gem_fabric.orange_gem")
-                        .append(Text.translatable("command.gem_fabric.status_filling"))
-                        .append(ItemOwners.ORANGE_GEM_OWNER.getName()));
-            }
-        }
+        });
+        ItemOwners.itemOwners.forEach(sendMessages);
         return 1;
     }
 }

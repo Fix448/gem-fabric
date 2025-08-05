@@ -5,11 +5,13 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import me.fixclient.gem_fabric.Main;
-import me.fixclient.gem_fabric.item.ItemManager;
+import me.fixclient.gem_fabric.util.GemSetSuggester;
+import me.fixclient.gem_fabric.util.GemSets;
 import me.fixclient.gem_fabric.util.GemSettings;
 import me.fixclient.gem_fabric.util.GemSettingsSuggester;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -26,6 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GemCommand {
@@ -34,7 +37,11 @@ public class GemCommand {
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("gem")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("start").executes(GemCommand::startStructure))
-                .then(CommandManager.literal("drop").executes(GemCommand::dropGem))
+                .then(CommandManager.literal("drop")
+                        .then(CommandManager.argument("set", StringArgumentType.string())
+                                .suggests(new GemSetSuggester())
+                                .executes(GemCommand::dropGem))
+                        )
                 .then(CommandManager.literal("settings")
                         .then(CommandManager.argument("setting", StringArgumentType.string())
                                 .suggests(new GemSettingsSuggester())
@@ -80,7 +87,8 @@ public class GemCommand {
         if (!context.getSource().getWorld().isClient) {
             ServerWorld serverWorld = context.getSource().getWorld();
             BlockPos spawn = serverWorld.getSpawnPos();
-            List<ItemEntity> entityList = getItemEntities(serverWorld, spawn);
+            String set = StringArgumentType.getString(context, "set");
+            List<ItemEntity> entityList = getItemEntities(serverWorld, spawn, set);
             for (ItemEntity itemEntity : entityList) {
                 itemEntity.setVelocity(Vec3d.ZERO);
                 serverWorld.spawnEntity(itemEntity);
@@ -89,31 +97,18 @@ public class GemCommand {
         return 1;
     }
 
-    private static @NotNull List<ItemEntity> getItemEntities(ServerWorld serverWorld, BlockPos spawn) {
-        ItemEntity healing = new ItemEntity(serverWorld, spawn.getX() +0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ() +0.5, new ItemStack(ItemManager.HEALING_GEM));
-        ItemEntity luft = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ()+0.5, new ItemStack(ItemManager.AIR_GEM));
-        ItemEntity orange = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ()+0.5, new ItemStack(ItemManager.ORANGE_GEM));
-        ItemEntity teleport = new ItemEntity(serverWorld, spawn.getX()+0.5, spawn.getY()+ GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ()+0.5, new ItemStack(ItemManager.TELEPORT_GEM));
-        return List.of(teleport, healing, luft, orange);
+    private static @NotNull List<ItemEntity> getItemEntities(ServerWorld serverWorld, BlockPos spawn, String set) {
+        List<ItemEntity> entityList = new ArrayList<>();
+        for (Item item : GemSets.getAllGemSets().get(set)) {
+            ItemEntity itemEntity = new ItemEntity(serverWorld, spawn.getX() + 0.5, spawn.getY() + GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ() + 0.5, new ItemStack(item));
+            entityList.add(itemEntity);
+        }
+        return entityList;
     }
 
     private static int save(CommandContext<ServerCommandSource> context) {
         Path path = Path.of(context.getSource().getServer().getSavePath(WorldSavePath.ROOT) + "/gem_settings.json");
         Main.LOGGER.info(path.toString());
-        GemSettings.updateSettings();
-        /*Map<String, Integer> settings = new java.util.HashMap<>(Map.of(
-                "gem_spawn_height", GemSettings.GEM_SPAWN_HEIGHT,
-                "healing_gem_slowness_duration", GemSettings.HEALING_GEM_SLOWNESS_DURATION,
-                "healing_gem_invulnerability_duration", GemSettings.HEALING_GEM_INVULNERABILITY_DURATION,
-                "healing_gem_regeneration_amplifier", GemSettings.HEALING_GEM_REGENERATION_AMPLIFIER,
-                "air_gem_levitation_duration", GemSettings.AIR_GEM_LEVITATION_DURATION,
-                "air_gem_levitation_amplifier", GemSettings.AIR_GEM_LEVITATION_AMPLIFIER,
-                "air_gem_slow_falling_duration", GemSettings.AIR_GEM_SLOW_FALLING_DURATION,
-                "air_gem_dolphins_grace_amplifier", GemSettings.AIR_GEM_DOLPHINS_GRACE_AMPLIFIER,
-                "orange_gem_levitation_duration", GemSettings.ORANGE_GEM_LEVITATION_DURATION,
-                "orange_gem_resistance_amplifier", GemSettings.ORANGE_GEM_RESISTANCE_AMPLIFIER
-        ));
-        settings.put("teleportation_gem_haste_amplifier", GemSettings.TELEPORTATION_GEM_HASTE_AMPLIFIER);*/
         GemSettings.saveSettings(path, GemSettings.SETTINGS);
         return 1;
     }

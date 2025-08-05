@@ -22,8 +22,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class Teleportation_Gem extends Gem {
 
-    public Teleportation_Gem(Settings settings) {
-        super(settings);
+    public Teleportation_Gem(Settings settings, String translatableKey) {
+        super(settings, true, translatableKey);
     }
     /**
      * If the player is sneaking, then it works like a chorus fruit.

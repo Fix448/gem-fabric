@@ -1,5 +1,6 @@
 package me.fixclient.gem_fabric.item.season_2;
 
+import me.fixclient.gem_fabric.item.Gem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
@@ -10,9 +11,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 
-public class god_gem extends Item {
-    public god_gem(Settings settings) {
-        super(settings);
+public class god_gem extends Gem {
+    public god_gem(Settings settings, String translatableKey) {
+        super(settings, false, translatableKey);
     }
 
     /** This item gives you OP and you get game mode creative */

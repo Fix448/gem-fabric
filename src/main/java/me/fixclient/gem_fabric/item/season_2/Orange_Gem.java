@@ -21,8 +21,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class Orange_Gem extends Gem {
-    public Orange_Gem(Settings settings) {
-        super(settings);
+    public Orange_Gem(Settings settings, String translatableKey) {
+        super(settings, true, translatableKey);
     }
 
 

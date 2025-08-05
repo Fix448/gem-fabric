@@ -19,8 +19,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class Air_Gem extends Gem {
-    public Air_Gem(Settings settings) {
-        super(settings);
+    public Air_Gem(Settings settings, String translatableKey) {
+        super(settings, true, translatableKey);
     }
 
     /**
