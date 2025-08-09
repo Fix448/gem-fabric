@@ -99,9 +99,11 @@ public class GemCommand {
 
     private static @NotNull List<ItemEntity> getItemEntities(ServerWorld serverWorld, BlockPos spawn, String set) {
         List<ItemEntity> entityList = new ArrayList<>();
-        for (Item item : GemSets.getAllGemSets().get(set)) {
-            ItemEntity itemEntity = new ItemEntity(serverWorld, spawn.getX() + 0.5, spawn.getY() + GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ() + 0.5, new ItemStack(item));
+        List<Item> gemSet = GemSets.getAllGemSets().get(set);
+        for (Item item : gemSet) {
+            ItemEntity itemEntity = new ItemEntity(serverWorld, spawn.getX() + 0.5, spawn.getY() + GemSettings.SETTINGS.get("gem_spawn_height"), spawn.getZ() + 0.5, new ItemStack((Item)item));
             entityList.add(itemEntity);
+
         }
         return entityList;
     }

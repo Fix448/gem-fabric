@@ -41,6 +41,5 @@ public class GemSettings {
 
     public static void createSettings() {
         SETTINGS.put("gem_spawn_height", 5);
-        SETTINGS.put("orange_gem_resistance_amplifier", 1);
     }
 }

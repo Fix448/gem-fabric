@@ -42,7 +42,8 @@ public class ItemManager {
     public static final Item ORANGE_GEM = registerGem("orange_gem",
             new Orange_Gem(createItemSettings("orange_gem").useCooldown(6.0f), "item.gem_fabric.orange_gem"),
             "season_2",
-            Map.of("orange_gem_resistance_amplifier", 1),
+            Map.of("orange_gem_resistance_amplifier", 1,
+                    "orange_gem_levitation_duration", 1),
             "item.gem_fabric.orange_gem");
 
     public static final Item GOD_GEM = registerGem("god_gem",

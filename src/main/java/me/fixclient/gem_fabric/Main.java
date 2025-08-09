@@ -28,6 +28,7 @@ public class Main implements ModInitializer {
     public void onInitialize() {
 
         GemSets.registerGemSet("season_2");
+        GemSettings.createSettings();
         LOGGER.info("Registering Items");
         ItemManager.initialize();
         LOGGER.info("Registering Items done");
@@ -60,6 +61,6 @@ public class Main implements ModInitializer {
         });
         ServerLifecycleEvents.SERVER_STARTED.register(server -> GemSettings.loadSettings(Path.of(server.getSavePath(WorldSavePath.ROOT) + "/gem_settings.json")));
 
-
+        GemSets.registerGemSet("test");
     }
 }
